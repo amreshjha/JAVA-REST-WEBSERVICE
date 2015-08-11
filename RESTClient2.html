@@ -1,0 +1,95 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+      
+      <script type="text/javascript">
+          function getField(fieldType, fieldTitle) {
+              var docTags = document.getElementsByTagName(fieldType);
+              for (var i = 0; i < docTags.length; i++) {
+                  if (docTags[i].title == fieldTitle) {
+                      return docTags[i]
+                  }
+              }
+          }
+
+          function getField(fieldType) {
+              var docTags = document.getElementsByTagName(fieldType);
+              for (var i = 0; i < docTags.length; i++) {
+                  alert(docTags[i].title + " : " + docTags[i].id);
+              }
+
+          }
+
+
+          //getField("input", "GetDetails").onclick = getdetails();
+          getField("input");
+
+          </script>
+
+        <script type="text/javascript">
+        var xmlhttp;
+        function init() {
+
+            if (window.ActiveXObject) {
+                // MSIE 
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                alert(0);
+            }else{
+                xmlhttp = new XMLHttpRequest();
+                alert(1);
+            }
+        }
+        function getdetails() {
+           // var empno = document.getElementById("empno");
+            var url = "http://162.86.2.182:11020/RestfulWebServiceExample/rest/ConversionService/InsertInDatabase/ABC23/60/23/06/2015";// + empno.value;
+            //alert(xmlhttp);
+            try{
+                xmlhttp.open('GET', url, true);
+                alert(2);
+                xmlhttp.send();
+                alert(3);
+                xmlhttp.onreadystatechange = function () {
+                    var response = document.getElementById("response");
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200) {
+                            response.value = xmlhttp.responseText;
+                        } else {
+                            alert("Error ->" + xmlhttp.responseText);
+                        }
+                    }
+                };
+            }catch(e)
+            {
+                alert("error : " + e);
+            }
+        }
+
+        function registerCustomEvent() {
+            document.getElementsByiD("savebutton2").onclick = getdetails();
+        }
+
+        _spBodyOnLoadFunctionNames.push(init);
+        _spBodyOnLoadFunctionNames.push(registerCustomEvent);
+
+  </script>
+
+  </head>
+  <body  onload="init()">
+   <h1>Call Employee Service </h1>
+   <table>
+   <tr>
+       <td>Request :  </td>
+       <td> <input title="GetDetails" type="button" value="GetDetails" onclick="getdetails()"/>
+   </tr>
+   <tr>
+       <td>Response:  </td>
+       <td><input type="text" readonly="true" id="response" size="20"/> </td>
+   </tr>
+
+  
+   </table>
+  </body>
+</html>
